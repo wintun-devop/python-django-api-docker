@@ -1,0 +1,36 @@
+#python-env
+/django_env
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# vercel
+.vercel
+
+#pycatche bytecode to ignore
+__pycache__/
+*.pyc
+/djangocrud/apis/__pycache__/
+/djangocrud/djangocrud/__pycache__/
+
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# env files (can opt-in for committing if needed)
+.env*
