@@ -16,9 +16,18 @@ pip install python-dotenv
 pip install Django==5.2.4
 ```
 
-## Project init
-
-
+### Django Rest Framework(https://www.django-rest-framework.org/)
+```
+pip install djangorestframework markdown django-filter psycopg2-binary
+```
+- list python installed packages
+```
+pip freeze
+```
+- Export python installed packages
+```
+pip freeze > requirements.txt
+```
 ## Open SSL Key Generate
 ```
 openssl rand -base64 32
