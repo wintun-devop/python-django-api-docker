@@ -15,12 +15,14 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from app_config import APP_SECRET_KEY,db_name,db_user,db_password,db_host_read,db_host_write
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-011#=efwu7s@!1l1h3s^s5!b$f!swq!fx)&z7x90w-x%anzc=%'
+SECRET_KEY = APP_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #developer added
+    'rest_framework',
+    'apis'
 ]
 
 MIDDLEWARE = [
@@ -72,12 +77,68 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# default
+""" 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+} 
+"""
+""" Developer Added """
+# database setting with one replica
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'HOST': db_host_write,  # Primary DB host
+        'PORT': '5432',
+    },
+    'replica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'HOST': db_host_read,  # Replace with replica host or IP
+        'PORT': '5432',
+    }
 }
+
+
+# database setting with one more replicas
+""" 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_crud_api',
+        'USER': 'dbadmin',
+        'PASSWORD': 'Abc123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'replica1': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_crud_api',
+        'USER': 'replica_user1',
+        'PASSWORD': 'ReplicaPass1',
+        'HOST': 'replica1.db.internal',
+        'PORT': '5432',
+    },
+    'replica2': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_crud_api',
+        'USER': 'replica_user2',
+        'PASSWORD': 'ReplicaPass2',
+        'HOST': 'replica2.db.internal',
+        'PORT': '5432',
+    }
+}
+
+"""
+
 
 
 # Password validation
@@ -120,3 +181,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+""" Developer Added """
+DATABASE_ROUTERS = ['djangoapp.routers.ReplicaRouter']
+
