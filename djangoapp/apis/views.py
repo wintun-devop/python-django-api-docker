@@ -29,7 +29,7 @@ class ProductViews(APIView):
         items = Product.objects.all()
         serializer = ProductSerializer(items, many=True)
         return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-    def patch(self, request, id=None):
+    def put(self, request, id=None):
         item = Product.objects.get(id=id)
         serializer = ProductSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
