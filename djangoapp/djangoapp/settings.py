@@ -185,3 +185,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """ Developer Added """
 DATABASE_ROUTERS = ['djangoapp.routers.ReplicaRouter']
 
+
+
