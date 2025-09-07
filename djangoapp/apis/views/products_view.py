@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import get_object_or_404,render,redirect
-from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,8 +18,14 @@ class ProductViews(APIView):
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_201_CREATED)
+            try:
+                serializer.save()
+                return Response({"status": "success", "data": serializer.data}, status=status.HTTP_201_CREATED)
+            except IntegrityError:
+                return Response({
+                    "status": "error",
+                    "message": "Product with this model already exists."
+                }, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     def get(self, request, id=None):
