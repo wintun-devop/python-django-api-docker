@@ -74,3 +74,8 @@ python manage.py createsuperuser
 python manage.py runserver
 
 ```
+
+### Upgrade Django Version
+```
+pip install --upgrade "Django==5.2.6"
+```
